@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Getting started example",
-  "description": "This extension allows the user to change the background color of the current page.",
+  "description": "OnePost",
   "version": "1.0",
 
   "browser_action": {
