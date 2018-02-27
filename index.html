@@ -77,13 +77,11 @@
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
     });
-    setTimeout(function(){     FB.api('/me/feed', 'post', {message: 'my first status...'}, function(response) {
+    alert(document.getElementById("postContent").elements["firstname"].value);
+    setTimeout(function(){     FB.api('/me/feed', 'post', {link: document.getElementById("postContent").elements["image"].value, message: document.getElementById("postContent").elements["firstname"].value}, function(response) {
         document.getElementById('status').innerHTML = response.id;
-      }); }, 3000);
+      }); }, 1000);
 
-    setTimeout(function(){     FB.api('/me/feed', 'post', {message: 'my second status...'}, function(response) {
-        document.getElementById('status').innerHTML = response.id;
-      }); }, 6000);
   }
 </script>
 
@@ -95,7 +93,12 @@
 
 <fb:login-button scope="public_profile,email,publish_actions" onlogin="checkLoginState();">
 </fb:login-button>
-
+<form id="postContent">
+  Message to post:<br>
+  <input type="text" name="firstname"><br>
+  Add a link to the post:<br>
+  <input type="text" name="image"><br>
+</form>
 <button onclick="testAPI()"> test</button>
 <div id="status">
 </div>
