@@ -3,9 +3,12 @@
 <head>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
+<script type="text/javascript" src="base64-binary.js"></script>
+<script type="text/javascript" src="jquery-3.3.1.js"></script>
 </head>
 <body>
 <script>
+  var accessToken = "token";
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
@@ -15,6 +18,10 @@
     // Full docs on the response object can be found in the documentation
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
+    	accessToken = response.authResponse.accessToken;
+    	//alert(accessToken);
+    	let former_action = $("#photo-form").attr('action');
+    	$("#photo-form").attr('action', former_action + accessToken);
       // Logged into your app and Facebook.
     } else {
       // The person is not logged into your app or we are unable to tell.
@@ -83,6 +90,10 @@
       }); }, 1000);
 
   }
+
+  function testPhoto() {
+	$("#photo-form").submit();
+  }
 </script>
 
 <!--
@@ -100,8 +111,18 @@
   <input type="text" name="image"><br>
 </form>
 <button onclick="testAPI()"> test</button>
-<div id="status">
-</div>
+<button onclick="testPhoto()"> testPhoto</button>
+ <FORM action='https://graph.facebook.com/me/photos?access_token='
+       enctype="multipart/form-data"
+       class="photo-form" 
+       id="photo-form"
+       method="post">
+   <P>
+   What photo are you sending? <INPUT type="file" name="files" id="photoInput"><BR>
+   Say something about the photo: <input type="text" name="caption"><br>
+   <INPUT type="reset">
+ </FORM>
 
+<div id="status">
 </body>
 </html>
