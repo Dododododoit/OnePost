@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
 <title>OnePost</title>
@@ -91,20 +91,26 @@
   	//facebook post
     if (document.getElementById("tFacebook").checked){
       //alert("sent to fb");
-    	document.getElementById("postContent").elements["firstname"].value = text;
-    	testAPI();
+    	setTimeout(function(){   
+	    	document.getElementById("postContent").elements["firstname"].value = text;
+	    	testAPI();
+        }, 1000);
     }
   	//twitter post
     if (document.getElementById("tTwitter").checked){
       //alert("sent to twitter");
-      document.getElementById("text-form-twitter").elements["caption"].value = text;
-      document.getElementById("text-form-twitter").submit();
+      	setTimeout(function(){   
+	      document.getElementById("text-form-twitter").elements["caption"].value = text;
+	      document.getElementById("text-form-twitter").submit();
+        }, 1500);
     }
   	//tumblr post
     if (document.getElementById("tTumblr").checked){
       //alert("sent to tumblr");
-      document.getElementById("text-form-tumblr").elements["caption"].value = text;
-      document.getElementById("text-form-tumblr").submit();
+    	setTimeout(function(){   
+	      document.getElementById("text-form-tumblr").elements["caption"].value = text;
+	      document.getElementById("text-form-tumblr").submit();
+        }, 1800);
     }
   }
   function fbClick() {
