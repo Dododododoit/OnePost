@@ -1,11 +1,13 @@
 # OnePost
   Run the OnePost
 # STEP 1:
-  cd OnePostServer
+  $ cd OnePostServer
 # STEP 2:
   $ python3 -m venv env<br />
   $ source env/bin/activate<br />
   $ pip install --upgrade pip<br />
   $ pip install -e .
 # STEP 3:
-  ./OnePostRun
+  $ source env/bin/activate<br />
+  $ cd onepost<br />
+  $ ./OnePostRun
