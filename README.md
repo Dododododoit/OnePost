@@ -16,5 +16,5 @@
   $ source env/bin/activate<br />
   $ cd onepost<br />
   $ ./OnePostRun
-# Notice
+# NOTICE
   Contact developer for facebook app permissions
