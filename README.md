@@ -1,5 +1,5 @@
 # OnePost
-  Run the OnePost
+  Run the OnePost Server
 # STEP 0:
   $ cd OnePostServer
 # STEP 1: SET UP DATABASE
