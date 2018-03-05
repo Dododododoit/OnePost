@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OnePost</title>
+
+
+<link href="../static/css/style.css" rel="stylesheet" type="text/css" media="all">
+<link href="//fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&amp;subset=cyrillic,cyrillic-ext,latin-ext,vietnamese" rel="stylesheet">
+</head>
+<body>
+
+
+	<script>
+  //******************************************************************************************
+  //************************************Facebook APIs*****************************************
+  //******************************************************************************************
+  var accessToken = "token";
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+    	accessToken = response.authResponse.accessToken;
+    	//alert(accessToken);
+    	let former_action = document.getElementById("photo-form").action;
+    	document.getElementById("photo-form").action = former_action + accessToken;
+      // Logged into your app and Facebook.
+    } 
+    // else {
+    //   // The person is not logged into your app or we are unable to tell.
+    //   document.getElementById('status').innerHTML = 'Please log ' +
+    //     'into this app.';
+    // }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '518079295243278',
+      cookie     : true,  // enable cookies to allow the server to access 
+                          // the session
+      xfbml      : true,  // parse social plugins on this page
+      version    : 'v2.12' // use graph api version 2.12
+    });
+
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // facebook apis
+  //link: document.getElementById("postContent").elements["image"].value
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+    });
+    //alert(document.getElementById("postContent").elements["firstname"].value);
+    setTimeout(function(){     FB.api('/me/feed', 'post', {link: document.getElementById("postContent").elements["image"].value, message: document.getElementById("postContent").elements["firstname"].value}, function(response) {
+      }); }, 1000);
+
+  }
+
+  function testPhoto() {
+  	setTimeout(function(){  document.getElementById("photo-form").submit();}, 1);
+  }
+
+  function sendPost() {
+  	let text = document.getElementById("postitall").value;
+  	//facebook post
+    if (document.getElementById("tFacebook").checked){
+      //alert("sent to fb");
+    	document.getElementById("postContent").elements["firstname"].value = text;
+    	testAPI();
+    }
+  	//twitter post
+    if (document.getElementById("tTwitter").checked){
+      //alert("sent to twitter");
+      document.getElementById("text-form-twitter").elements["caption"].value = text;
+      document.getElementById("text-form-twitter").submit();
+    }
+  	//tumblr post
+    if (document.getElementById("tTumblr").checked){
+      //alert("sent to tumblr");
+      document.getElementById("text-form-tumblr").elements["caption"].value = text;
+      document.getElementById("text-form-tumblr").submit();
+    }
+  }
+  function fbClick() {
+  	document.getElementById("fbbutton").click();
+  }
+
+
+    function sendPhoto() {
+      //facebook post
+      if (document.getElementById("pFacebook").checked){
+        //alert("sent to fb");
+        //alert(document.getElementById("generalpost").elements["caption"].value);
+        setTimeout(function(){   
+          document.getElementById("generalpost").action = document.getElementById("photo-form").action;
+          document.getElementById("generalpost").submit();
+        }, 1000);
+      }
+      //Instagram post
+      if (document.getElementById("pInstagram").checked){
+        //alert("sent to instagram");
+        //alert(document.getElementById("generalpost").elements["caption"].value);
+        setTimeout(function(){  
+          document.getElementById("generalpost").action = document.getElementById("photo-form-ins").action;
+          document.getElementById("generalpost").submit();
+        }, 1800);
+      }
+      //twitter post
+      if (document.getElementById("pTwitter").checked){
+        //alert("sent to twitter");
+        //alert(document.getElementById("generalpost").elements["caption"].value);
+        setTimeout(function(){  
+          document.getElementById("generalpost").action = document.getElementById("photo-form-twitter").action;
+          document.getElementById("generalpost").submit();
+        }, 2000);
+      }
+      //tumblr post
+      if (document.getElementById("pTumblr").checked){
+        //alert("sent to tumblr");
+        //alert(document.getElementById("generalpost").elements["caption"].value);
+        setTimeout(function(){  
+          document.getElementById("generalpost").action = document.getElementById("photo-form-tumblr").action;
+          document.getElementById("generalpost").submit();
+        }, 2200);
+      }
+  }
+
+
+</script>
+
+
+
+
+
+
+<div class="form">
+<h1>OnePost</h1>
+	<div class="form-content">
+      <p align="center" style="color: white"><strong>Text Post</strong></p>
+			<div class="name">
+<!-- 				<label>Instagram Account</label>  -->
+				<input class="input1" id = "postitall" type="text" name="posttext" placeholder="text" required="">
+			</div>
+
+						<button class="bt" onclick="sendPost()">OnePost!</button>
+	<form action="" method="get" style="color: white"> To:
+    <input type="checkbox" id ="tFacebook" name="Facebook" value="fb" checked="checked" /> Facebook
+    <input type="checkbox" id ="tTwitter" name="Twitter" value="tt" checked="checked" /> Twitter
+    <input type="checkbox" id ="tTumblr" name="Tumblr" value="tum" checked="checked" /> Tumblr
+  </form>
+      <p align="center" style="color: white"><strong>Photo Post</strong></p>
+      <div class="name">
+<!--        <label>Instagram Account</label>  -->
+
+     <FORM action=''
+         enctype="multipart/form-data"
+         class="photo-form" 
+         id="generalpost"
+         method="post"
+         target="hiddenFrame">
+     <P>
+       <INPUT type="file" name="files" id="generalupload"><BR>
+        <input class="input1" type="text" name="caption" placeholder="Say something about your photo"><br>
+    </FORM>
+        <!-- <input class="input1" id = "postitcaption" type="text" name="caption" placeholder="Say something about your photo" required=""> -->
+      </div>
+
+            <button class="bt" onclick="sendPhoto()">OnePost!</button>
+
+  <form action="" method="get" style="color: white"> To:
+    <input type="checkbox" id ="pFacebook" name="Facebook" value="fb" checked="checked" /> Facebook
+    <input type="checkbox" id ="pTwitter" name="Twitter" value="tt" checked="checked" /> Twitter
+    <input type="checkbox" id ="pInstagram" name="Instagram" value="ins" checked="checked" /> Instagram
+    <input type="checkbox" id ="pTumblr" name="Tumblr" value="tum" checked="checked" /> Tumblr
+  </form>
+  	<p align="center" style="color: white"><strong>Platform Authentication</strong></p>
+  	<p>&nbsp;</p>
+  	<p align="center">  
+    <img src="../static/images/fb.png" onclick="FB.login()" alt="logo" class="logo" width="40" > 
+  <a href="/twitter/setting" style="text-decoration:none ">
+    <img src="../static/images/twitter.png" alt="logo" class="logo" width="40"> 
+  </a>
+    <a href="/instagram/setting" style="text-decoration:none ">
+    <img src="../static/images/instagram.png" alt="logo" class="logo" width="40"> 
+  </a>
+    <a href="/tumblr/setting" style="text-decoration:none ">
+    <img src="../static/images/tumblr.png" alt="logo" class="logo" width="40"> 
+  </a> </p>
+	</div>
+</div>
+<!--   <form action="" method="get" style="color: white"> Select Platform:
+    <input type="checkbox" name="Facebook" value="fb" checked="checked" /> Facebook
+    <input type="checkbox" name="Twitter" value="tt" checked="checked" /> Twitter
+    <input type="checkbox" name="Instagram" value="ins" checked="checked" /> Instagram
+    <input type="checkbox" name="Tumblr" value="tum" checked="checked" /> Tumblr
+  </form> -->
+<footer>&copy; 2018 authentication form. All rights reserved | Design by <a href="/">OnePost</a>|<a href="/accounts/logout">Logout</a></footer>
+
+
+<div id="divCheckbox" >
+<p> <strong>Facebook API</strong></p>
+<fb:login-button id = "fbbutton" scope="public_profile,email,publish_actions" onlogin="checkLoginState();">
+</fb:login-button>
+<form id="postContent">
+  Message to post:<br>
+  <input type="text" name="firstname"><br>
+  Add a link to the post:<br>
+  <input type="text" name="image"><br>
+</form>
+<button onclick="testAPI()"> test</button>
+<button onclick="testPhoto()"> testPhoto</button>
+ <FORM action='https://graph.facebook.com/me/photos?access_token='
+       enctype="multipart/form-data"
+       class="photo-form" 
+       id="photo-form"
+       method="post"
+       target="hiddenFrame">
+   <P>
+   What photo are you sending? <INPUT type="file" name="files" id="photoInput"><BR>
+   Say something about the photo: <input type="text" name="caption"><br>
+   <INPUT type="reset">
+ </FORM>
+
+<p> <strong>Instagram API</strong></p>
+		<a href="/instagram/setting" style=" color: black;">
+			Update instagram account
+		</a>
+
+  <FORM action='/instagram'
+       enctype="multipart/form-data"
+       class="photo-form" 
+       id="photo-form-ins"
+       method="post">
+   <P>
+   What photo are you sending to Instagram? <INPUT type="file" name="files" id="photoInputIns"><BR>
+   Say something about the photo: <input type="text" name="caption" value=" "><br>
+   <input type="submit" value="Submit"><INPUT type="reset">
+ </FORM>
+
+
+<p><strong> Twitter API</strong></p>f
+	<a href="/twitter/setting" style=" color: black;">
+			Twitter authentication
+		</a>
+ 	 <FORM action='/twitter/text'
+	       id="text-form-twitter"
+	       method="post"
+	       target="hiddenFrame">
+	   <P>
+	   Tweet this: <input type="text" name="caption"><br>
+	   <input type="submit" value="Submit"><INPUT type="reset">
+	 </FORM>
+	 <FORM action='/twitter/photo'
+	       enctype="multipart/form-data"
+	       class="photo-form" 
+	       id="photo-form-twitter"
+	       method="post">
+	   <P>
+	   What photo are you sending to Twitter? <INPUT type="file" name="files" id="photoInputTwitter"><BR>
+	   Say something about the photo: <input type="text" name="caption"><br>
+	   <input type="submit" value="Submit"><INPUT type="reset">
+	 </FORM>
+
+<p> <strong>Tumblr API</strong></p>
+	<a href="/tumblr/setting" style=" color: black;">
+			Tumblr authentication
+		</a>
+ 	 <FORM action='/tumblr/text'
+	       id="text-form-tumblr"
+	       method="post"
+	       target="hiddenFrame">
+	   <P>
+	   Post this: <input type="text" name="caption"><br>
+	   <input type="submit" value="Submit"><INPUT type="reset">
+	 </FORM>
+	 <FORM action='/tumblr/photo'
+	       enctype="multipart/form-data"
+	       class="photo-form" 
+	       id="photo-form-tumblr"
+	       method="post">
+	   <P>
+	   What photo are you sending to Tumblr? <INPUT type="file" name="files" id="photoInputTumblr"><BR>
+	   Say something about the photo: <input type="text" name="caption"><br>
+	   <input type="submit" value="Submit"><INPUT type="reset">
+	 </FORM>
+
+</div>
+<iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+</body>
+</html>
+

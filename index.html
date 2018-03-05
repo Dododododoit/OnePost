@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Facebook Login JavaScript Example</title>
+<title>OnePost</title>
 <meta charset="UTF-8">
-<script type="text/javascript" src="base64-binary.js"></script>
-<script type="text/javascript" src="jquery-3.3.1.js"></script>
 </head>
 <body>
 <script>
@@ -23,8 +21,8 @@
     if (response.status === 'connected') {
     	accessToken = response.authResponse.accessToken;
     	//alert(accessToken);
-    	let former_action = $("#photo-form").attr('action');
-    	$("#photo-form").attr('action', former_action + accessToken);
+    	let former_action = document.getElementById("photo-form").attr('action');
+    	document.getElementById("photo-form").attr('action', former_action + accessToken);
       // Logged into your app and Facebook.
     } else {
       // The person is not logged into your app or we are unable to tell.
@@ -95,7 +93,7 @@
   }
 
   function testPhoto() {
-	$("#photo-form").submit();
+	document.getElementById("photo-form").submit();
   }
 
 

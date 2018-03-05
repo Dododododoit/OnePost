@@ -20,8 +20,22 @@ client.userInfo(function(err, data) {
 
   });
 });
-// Make a post
-client.createTextPost("weexdee.tumblr.com", {title: "sb", body: "post test"}, () => {});
+
+client.blogInfo('weexdee.tumblr.com', function (err, data) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(JSON.stringify(data));
+  }
+});
+
+client.createTextPost('weexdee.tumblr.com', `image is dead`, function (err, data) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(JSON.stringify(data));
+  }
+});
 },{"tumblr.js":384}],2:[function(require,module,exports){
 'use strict';
 

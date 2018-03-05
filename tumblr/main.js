@@ -13,11 +13,25 @@ client.userInfo(function(err, data) {
   data.user.blogs.forEach(function(blog) {
   	var name = blog.name;
     console.log(blog.name);
-   	alert(name);
+   	//alert(name);
     var method = 'POST';
     var url = 'http://api.tumblr.com/v2/blog/' + name + '.tumblr.com/post';
 
   });
 });
-// Make a post
-client.createTextPost("weexdee.tumblr.com", {title: "sb", body: "post test"}, () => {});
+
+client.blogInfo('weexdee.tumblr.com', function (err, data) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(JSON.stringify(data));
+  }
+});
+
+client.createTextPost('weexdee.tumblr.com', {body:`image is dead`}, function (err, data) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(JSON.stringify(data));
+  }
+});
