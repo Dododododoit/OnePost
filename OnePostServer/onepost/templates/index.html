@@ -108,7 +108,10 @@
     }
   }
   function fbClick() {
-  	document.getElementById("fbbutton").click();
+  	FB.login(function(response) {
+  // handle the response
+  		checkLoginState();
+	}, {scope: 'public_profile,email,publish_actions'});
   }
 
 
@@ -202,7 +205,7 @@
   	<p align="center" style="color: white"><strong>Platform Authentication</strong></p>
   	<p>&nbsp;</p>
   	<p align="center">  
-    <img src="../static/images/fb.png" onclick="FB.login()" alt="logo" class="logo" width="40" > 
+    <img src="../static/images/fb.png" onclick="fbClick()" alt="logo" class="logo" width="40" > 
   <a href="/twitter/setting" style="text-decoration:none ">
     <img src="../static/images/twitter.png" alt="logo" class="logo" width="40"> 
   </a>
@@ -225,8 +228,8 @@
 
 <div id="divCheckbox" style="display: none;">
 <p> <strong>Facebook API</strong></p>
-<fb:login-button id = "fbbutton" scope="public_profile,email,publish_actions" onlogin="checkLoginState();">
-</fb:login-button>
+<!-- <fb:login-button id = "fbbutton" scope="public_profile,email,publish_actions" onlogin="checkLoginState();">
+</fb:login-button> -->
 <form id="postContent">
   Message to post:<br>
   <input type="text" name="firstname"><br>
