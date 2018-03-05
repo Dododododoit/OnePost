@@ -3,9 +3,9 @@
 # STEP 1:
   cd OnePostServer
 # STEP 2:
-  $ python3 -m venv env
-  $ source env/bin/activate
-  $ pip install --upgrade pip
+  $ python3 -m venv env<br />
+  $ source env/bin/activate<br />
+  $ pip install --upgrade pip<br />
   $ pip install -e .
 # STEP 3:
   ./OnePostRun
