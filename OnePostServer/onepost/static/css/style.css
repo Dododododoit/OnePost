@@ -163,7 +163,11 @@ button.bt {
 	cursor: pointer;
 }
 .bt:hover {
-	background-color:#3E3737;
+	background-color:#174276;
+	color:#ffffff;
+}
+.bt:active {
+	background-color:#000000;
 	color:#ffffff;
 }
 footer {
