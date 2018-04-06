@@ -230,7 +230,7 @@ function checkPhoto(){
           document.getElementById("generalpost").action = '/facebook/photo';
           document.getElementById("generalpost").elements["delay"].value = delay;
           document.getElementById("generalpost").submit();
-        }, 1000);
+        }, 500);
       }
       //Instagram post
       if (document.getElementById("pInstagram").checked){
@@ -240,7 +240,7 @@ function checkPhoto(){
           document.getElementById("generalpost").action = document.getElementById("photo-form-ins").action;
           document.getElementById("generalpost").elements["delay"].value = delay;
           document.getElementById("generalpost").submit();
-        }, 1800);
+        }, 1000);
       }
       //twitter post
       if (document.getElementById("pTwitter").checked){
@@ -250,7 +250,7 @@ function checkPhoto(){
           document.getElementById("generalpost").action = document.getElementById("photo-form-twitter").action;
           document.getElementById("generalpost").elements["delay"].value = delay;
           document.getElementById("generalpost").submit();
-        }, 2000);
+        }, 1500);
       }
       //tumblr post
       if (document.getElementById("pTumblr").checked){
@@ -260,12 +260,12 @@ function checkPhoto(){
           document.getElementById("generalpost").action = document.getElementById("photo-form-tumblr").action;
           document.getElementById("generalpost").elements["delay"].value = delay;
           document.getElementById("generalpost").submit();
-        }, 2200);
+        }, 2000);
       }
       //Post feedback
       setTimeout(function(){   
         alert("Successfully posted");
-      }, 4000);
+      }, 3000);
   }
   var loadFile = function(event) {
     var output = document.getElementById('output');
