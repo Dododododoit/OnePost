@@ -1,9 +1,9 @@
-*~
-*.log
-*.egg-info/
-*.db
-*.pyc
-.DS_Store
-__pycache__/
 env/
-var/
+__pycache__/
+.DS_Store
+*.pyc
+
+*.db
+*.egg-info/
+*.log
+*~
