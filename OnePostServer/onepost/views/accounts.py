@@ -44,6 +44,9 @@ def show_login():
 def redirect_logout():
     if 'username' in session:
         session.pop('username', None)
+        print("poped")
+        if 'username' in session:
+            print("FUCK")
     return redirect(url_for('show_login'))
 
 

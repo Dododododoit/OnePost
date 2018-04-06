@@ -31,3 +31,11 @@ CREATE TABLE tumblr(
   FOREIGN KEY (username) REFERENCES users(username)
   ON DELETE CASCADE
 );
+
+CREATE TABLE facebook(
+  username VARCHAR(20) NOT NULL,
+  accessToken VARCHAR(256) NOT NULL,
+  PRIMARY KEY(username),
+  FOREIGN KEY (username) REFERENCES users(username)
+  ON DELETE CASCADE
+);

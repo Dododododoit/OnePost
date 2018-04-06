@@ -28,6 +28,8 @@
     	//alert(accessToken);
     	let former_action = document.getElementById("photo-form").action;
     	document.getElementById("photo-form").action = former_action + accessToken;
+      document.getElementById("fbtoken").elements["accessToken"].value = accessToken;
+      document.getElementById("fbtoken").submit();
       // Logged into your app and Facebook.
     } 
     // else {
@@ -86,14 +88,56 @@
   	setTimeout(function(){  document.getElementById("photo-form").submit();}, 1);
   }
 
+  function checkPost(){
+    let fbLog = (document.getElementById("facebookAuth").value == '1');
+    let twitterLog = (document.getElementById("twitterAuth").value == '1');
+    let tumblrLog = (document.getElementById("tumblrAuth").value == '1');
+    let return_value = true;
+    if (!fbLog && document.getElementById("tFacebook").checked){
+      alert("Please authenticate facebook and refresh");
+      return_value = false;
+    }
+    if (!twitterLog && document.getElementById("tTwitter").checked){
+      alert("Please authenticate twitter and refresh");
+      //document.getElementById("twitterauth").click();
+      return_value = false;
+    }
+    if (!tumblrLog && document.getElementById("tTumblr").checked){
+      alert("Please authenticate tumblr and refresh");
+      //document.getElementById("instagramauth").click();
+      return_value = false;
+    }
+    return return_value;
+  }
   function sendPost() {
+    if(!checkPost())
+      return;
   	let text = document.getElementById("postitall").value;
+    let delay = 0;
+    if (document.getElementById("sb1").checked){
+      //alert(document.getElementById("dl1").value);
+      let str = document.getElementById("dl1").value;
+      if (str == ""){
+        alert("Time scheduled is incorrect");
+        return;
+      }
+      let d = new Date(str);
+      let d2 = new Date();
+      delay = Math.floor((d-d2)/60000);
+      if (delay < 0) {
+        alert("You cannot Schedule the post to the past!");
+        return;
+      }
+    }
   	//facebook post
     if (document.getElementById("tFacebook").checked){
       //alert("sent to fb");
     	setTimeout(function(){   
-	    	document.getElementById("postContent").elements["firstname"].value = text;
-	    	testAPI();
+	    	// document.getElementById("postContent").elements["firstname"].value = text;
+	    	// testAPI();
+        document.getElementById("fb-text").elements["caption"].value = text;
+        document.getElementById("fb-text").elements["delay"].value = delay;
+        document.getElementById("fb-text").submit();
         }, 1000);
     }
   	//twitter post
@@ -101,6 +145,7 @@
       //alert("sent to twitter");
       	setTimeout(function(){   
 	      document.getElementById("text-form-twitter").elements["caption"].value = text;
+        document.getElementById("text-form-twitter").elements["delay"].value = delay;
 	      document.getElementById("text-form-twitter").submit();
         }, 1500);
     }
@@ -109,9 +154,15 @@
       //alert("sent to tumblr");
     	setTimeout(function(){   
 	      document.getElementById("text-form-tumblr").elements["caption"].value = text;
+        document.getElementById("text-form-tumblr").elements["delay"].value = delay;
+        //alert(document.getElementById("text-form-tumblr").elements["delay"].value);
 	      document.getElementById("text-form-tumblr").submit();
         }, 1800);
     }
+    //Post feedback
+    setTimeout(function(){   
+      alert("Successfully posted");
+    }, 2100);
   }
   function fbClick() {
   	FB.login(function(response) {
@@ -121,13 +172,63 @@
   }
 
 
+function checkPhoto(){
+    let fbLog = (document.getElementById("facebookAuth").value == '1');
+    let insLog = (document.getElementById("instagramAuth").value == '1');
+    let twitterLog = (document.getElementById("twitterAuth").value == '1');
+    let tumblrLog = (document.getElementById("tumblrAuth").value == '1');
+    let return_value = true;
+    if (!fbLog && document.getElementById("pFacebook").checked){
+      alert("Please authenticate facebook and refresh");
+      return_value = false;
+    }
+    if (!insLog && document.getElementById("pInstagram").checked){
+      alert("Please authenticate instagram and refresh");
+      //document.getElementById("instagramauth").click();
+      return_value = false;
+    }
+    if (!twitterLog && document.getElementById("pTwitter").checked){
+      alert("Please authenticate twitter and refresh");
+      //document.getElementById("twitterauth").click();
+      return_value = false;
+    }
+    if (!tumblrLog && document.getElementById("pTumblr").checked){
+      alert("Please authenticate tumblr and refresh");
+      //document.getElementById("instagramauth").click();
+      return_value = false;
+    }
+    return return_value;
+  }
+
+
     function sendPhoto() {
-      //facebook post
+      //check post
+      if(!checkPhoto()){
+        return;
+      }
+      let delay = 0;
+      if (document.getElementById("sb2").checked){
+        //alert(document.getElementById("dl1").value);
+        str = document.getElementById("dl2").value;
+        if (str == ""){
+          alert("Time scheduled is incorrect");
+          return;
+        }
+        let d = new Date(str);
+        let d2 = new Date();
+        delay = Math.floor((d-d2)/60000);
+        if (delay < 0) {
+          alert("You cannot Schedule the post to the past!");
+          return;
+        }
+      }
       if (document.getElementById("pFacebook").checked){
         //alert("sent to fb");
         //alert(document.getElementById("generalpost").elements["caption"].value);
         setTimeout(function(){   
-          document.getElementById("generalpost").action = document.getElementById("photo-form").action;
+          //document.getElementById("generalpost").action = document.getElementById("photo-form").action;
+          document.getElementById("generalpost").action = '/facebook/photo';
+          document.getElementById("generalpost").elements["delay"].value = delay;
           document.getElementById("generalpost").submit();
         }, 1000);
       }
@@ -137,6 +238,7 @@
         //alert(document.getElementById("generalpost").elements["caption"].value);
         setTimeout(function(){  
           document.getElementById("generalpost").action = document.getElementById("photo-form-ins").action;
+          document.getElementById("generalpost").elements["delay"].value = delay;
           document.getElementById("generalpost").submit();
         }, 1800);
       }
@@ -146,6 +248,7 @@
         //alert(document.getElementById("generalpost").elements["caption"].value);
         setTimeout(function(){  
           document.getElementById("generalpost").action = document.getElementById("photo-form-twitter").action;
+          document.getElementById("generalpost").elements["delay"].value = delay;
           document.getElementById("generalpost").submit();
         }, 2000);
       }
@@ -155,10 +258,19 @@
         //alert(document.getElementById("generalpost").elements["caption"].value);
         setTimeout(function(){  
           document.getElementById("generalpost").action = document.getElementById("photo-form-tumblr").action;
+          document.getElementById("generalpost").elements["delay"].value = delay;
           document.getElementById("generalpost").submit();
         }, 2200);
       }
+      //Post feedback
+      setTimeout(function(){   
+        alert("Successfully posted");
+      }, 4000);
   }
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+  };
 
 
 </script>
@@ -170,19 +282,22 @@
 
 <div class="form">
 <h1>OnePost</h1>
-	<div class="form-content">
-      <p align="center" style="color: white"><strong>Text Post</strong></p>
-			<div class="name">
-<!-- 				<label>Instagram Account</label>  -->
-				<input class="input1" id = "postitall" type="text" name="posttext" placeholder="text" required="">
-			</div>
 
-						<button class="bt" onclick="sendPost()">OnePost!</button>
+	<div class="form-content">
+	
+      <p align="center" style="color: white"><strong>Text Post</strong></p>
+			<div  class="name">
+<!-- 				<label>Instagram Account</label>  -->
+				<input class="input2" id = "postitall" type="text" name="posttext" placeholder="text" required="">
+			</div>
+						<button class="bt" onclick="sendPost()">OnePost!</button>    <p align="left" style="color: white">  Schedule: <input type="checkbox" value="tum" id="sb1" checked="checked" />
+              <input type="datetime-local" min="2018-04-01T08:30" id="dl1" max="2018-06-30T16:30"  > </p>
 	<form action="" method="get" style="color: white"> To:
     <input type="checkbox" id ="tFacebook" name="Facebook" value="fb" checked="checked" /> Facebook
     <input type="checkbox" id ="tTwitter" name="Twitter" value="tt" checked="checked" /> Twitter
     <input type="checkbox" id ="tTumblr" name="Tumblr" value="tum" checked="checked" /> Tumblr
   </form>
+
       <p align="center" style="color: white"><strong>Photo Post</strong></p>
       <div class="name">
 <!--        <label>Instagram Account</label>  -->
@@ -194,34 +309,38 @@
          method="post"
          target="hiddenFrame">
      <P>
-       <INPUT type="file" name="files" id="generalupload"><BR>
-        <input class="input1" type="text" name="caption" placeholder="Say something about your photo"><br>
+       <INPUT type="file" name="files" id="generalupload" accept="image/*" onchange="loadFile(event)"><BR>
+      <img id="output"/>
+        <input class="input2" type="text" name="caption" placeholder="Say something about your photo"><br> 
+        <input type="hidden" class="input3" name="delay"><br>
     </FORM>
         <!-- <input class="input1" id = "postitcaption" type="text" name="caption" placeholder="Say something about your photo" required=""> -->
       </div>
 
             <button class="bt" onclick="sendPhoto()">OnePost!</button>
-
+   <p align="left" style="color: white">  Schedule: <input type="checkbox" value="tum" id="sb2" checked="checked" />
+    <input type="datetime-local" min="2018-04-01T08:30" id="dl2" max="2018-06-30T16:30"> </p>
   <form action="" method="get" style="color: white"> To:
     <input type="checkbox" id ="pFacebook" name="Facebook" value="fb" checked="checked" /> Facebook
     <input type="checkbox" id ="pTwitter" name="Twitter" value="tt" checked="checked" /> Twitter
     <input type="checkbox" id ="pInstagram" name="Instagram" value="ins" checked="checked" /> Instagram
     <input type="checkbox" id ="pTumblr" name="Tumblr" value="tum" checked="checked" /> Tumblr
   </form>
+
   	<p align="center" style="color: white"><strong>Platform Authentication</strong></p>
   	<p>&nbsp;</p>
   	<p align="center">  
   <a href="#" onclick="fbClick()" style="text-decoration:none ">
-    <img src="../static/images/fb.png" alt="logo" class="logo" width="40" > 
+    <img src="../static/images/fb.png" alt="logo" id ="fbauth" class="logo" width="40" > 
   </a>
   <a href="/twitter/setting" style="text-decoration:none ">
-    <img src="../static/images/twitter.png" alt="logo" class="logo" width="40"> 
+    <img src="../static/images/twitter.png" alt="logo" id ="twitterauth" class="logo" width="40"> 
   </a>
     <a href="/instagram/setting" style="text-decoration:none ">
-    <img src="../static/images/instagram.png" alt="logo" class="logo" width="40"> 
+    <img src="../static/images/instagram.png" alt="logo" id ="instagramauth" class="logo" width="40"> 
   </a>
     <a href="/tumblr/setting" style="text-decoration:none ">
-    <img src="../static/images/tumblr.png" alt="logo" class="logo" width="40"> 
+    <img src="../static/images/tumblr.png" alt="logo" id ="tumblrauth" class="logo" width="40"> 
   </a> </p>
 	</div>
 </div>
@@ -231,7 +350,7 @@
     <input type="checkbox" name="Instagram" value="ins" checked="checked" /> Instagram
     <input type="checkbox" name="Tumblr" value="tum" checked="checked" /> Tumblr
   </form> -->
-<footer>&copy; 2018 authentication form. All rights reserved | Design by <a href="/">OnePost</a>|<a href="/accounts/logout">Logout</a></footer>
+<footer>&copy; 2018 OnePost form. All rights reserved | Design by <a href="/">OnePost</a> | <a href="/accounts/logout">Logout</a></footer>
 
 
 <div id="divCheckbox" style="display: none;">
@@ -258,6 +377,17 @@
    <INPUT type="reset">
  </FORM>
 
+  <FORM action='/facebook/text'
+       class="fb-text-form" 
+       id="fb-text"
+       method="post"
+       target="hiddenFrame">
+   <P>
+   <input type="text" name="caption" value=" "><br>
+   <input type="text" name="delay" value=" "><br>
+   <input type="submit" value="Submit"><INPUT type="reset">
+ </FORM>
+
 <p> <strong>Instagram API</strong></p>
 		<a href="/instagram/setting" style=" color: black;">
 			Update instagram account
@@ -270,7 +400,7 @@
        method="post">
    <P>
    What photo are you sending to Instagram? <INPUT type="file" name="files" id="photoInputIns"><BR>
-   Say something about the photo: <input type="text" name="caption" value=" "><br>
+   Say something about the photo: <input type="text" name="caption" value="0"><br>
    <input type="submit" value="Submit"><INPUT type="reset">
  </FORM>
 
@@ -285,6 +415,7 @@
 	       target="hiddenFrame">
 	   <P>
 	   Tweet this: <input type="text" name="caption"><br>
+        <input type="text" name="delay" value="0"><br>
 	   <input type="submit" value="Submit"><INPUT type="reset">
 	 </FORM>
 	 <FORM action='/twitter/photo'
@@ -308,6 +439,7 @@
 	       target="hiddenFrame">
 	   <P>
 	   Post this: <input type="text" name="caption"><br>
+        <input type="text" name="delay" value="0"><br>
 	   <input type="submit" value="Submit"><INPUT type="reset">
 	 </FORM>
 	 <FORM action='/tumblr/photo'
@@ -321,7 +453,22 @@
 	   <input type="submit" value="Submit"><INPUT type="reset">
 	 </FORM>
 
+<!-- Authorized server with Facebook accesstoken -->
+   <FORM action='/facebook/setting'
+         id="fbtoken"
+         method="post"
+         target="hiddenFrame">
+     <P>
+     <input type="text" name="accessToken"><br>
+     <input type="submit" value="Submit">
+   </FORM>
+   <!-- Check authentications -->
+     <input type="text" id ="facebookAuth" value= "{{ facebook }}"><br>
+     <input type="text" id="instagramAuth" value= "{{ instagram }}">
+     <input type="text" id="twitterAuth" value= "{{ twitter }}"><br>
+     <input type="text" id="tumblrAuth" value= "{{ tumblr }}">    
 </div>
+<!-- Hide the response with hidden iframe -->
 <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
 </body>
 </html>
